@@ -23,7 +23,7 @@ The query will return:
     }
 }
 ```
-When a token is generated, it will not be possible to login from another device, you should delete it after you have finished using it or it will delete itself after 10 minutes of inactivity.
+When a token is generated, it will not be possible to login from a web browser, you should delete it after you have finished using it or it will delete itself after 10 minutes of inactivity.
 #### Delete Token
 ```console
 curl --location --request DELETE 'http://192.168.0.1/rest/v1/user/3/token/e7a3c625616b8ad58493e1a9c91181c3' \
