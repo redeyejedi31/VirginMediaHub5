@@ -11,7 +11,7 @@ curl --location --request POST 'http://192.168.0.1/rest/v1/user/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{"password":"ABC123"}'
 ```
-The password is the that printed on the CM which you use to access the config page. Replace ABC123 with your password but keep the quotes.
+Use the password printed on your Cable Modem (CM) to access the configuration page. Replace ABC123 with your password, ensuring it remains enclosed in quotes.
 
 The query will return:
 ```JSON
@@ -23,13 +23,13 @@ The query will return:
     }
 }
 ```
-When a token is generated, it will not be possible to login from a web browser, you should delete it after you have finished using it or it will delete itself after 10 minutes of inactivity.
+Generating a token will disable web browser login.  Tokens should be deleted after use or they will automatically expire after 10 minutes of inactivity.
 #### Delete Token
 ```console
 curl --location --request DELETE 'http://192.168.0.1/rest/v1/user/3/token/e7a3c625616b8ad58493e1a9c91181c3' \
 --header 'Authorization: Bearer e7a3c625616b8ad58493e1a9c91181c3'
 ```
-No response will be returned when running the Delete Token. An incorrect/invalid key will return:
+A successful Delete Token request will not return a response.  An invalid or incorrect key will result in the following:
 ```json
 {"status":401,"message":"Unauthorized","errorCode":7}
 ```
@@ -37,7 +37,7 @@ No response will be returned when running the Delete Token. An incorrect/invalid
 ## Example Queries
 
 #### Ping Servers 
-When performing a Ping (ICMP) or Traceroute, it will create a job, the sequence is to POST, GET and DELETE. A further job cannot be created until the previous have been deleted.
+Ping (ICMP) and Traceroute operations create jobs requiring a POST, GET, and DELETE sequence.  A new job cannot be initiated until the previous one is completed and deleted.
 ```console 
 curl --location --request POST 'http://192.168.0.1/rest/v1/system/diagnostics/ping/jobs' \
 --header 'Token: Bearer e7a3c625616b8ad58493e1a9c91181c3' \
@@ -203,4 +203,61 @@ curl --location --request GET 'http://192.168.0.1/rest/v1/network/hosts?connecte
         ]
     }
 }
+```
+Here are the API-accessible pages, without detailing the specific commands or their functionality: 
+### Exposed to api
+```
+/rest/v1/cablemodem/downstream
+/rest/v1/cablemodem/downstream/primary_
+/rest/v1/cablemodem/registration
+/rest/v1/cablemodem/state
+/rest/v1/cablemodem/state_
+/rest/v1/cablemodem/upstream
+/rest/v1/mta/lines
+/rest/v1/network/hosts?connectedOnly=true
+/rest/v1/network/hosts?connectedOnly=true&interface=wifi
+/rest/v1/network/ipportfilters
+/rest/v1/network/ipv4/dhcp
+/rest/v1/network/ipv4/dmz
+/rest/v1/network/ipv4/firewall
+/rest/v1/network/ipv4/info
+/rest/v1/network/ledlight
+/rest/v1/network/macfilters
+/rest/v1/network/mtu
+/rest/v1/network/portforwarding
+/rest/v1/network/porttriggers
+/rest/v1/network/reservedipaddresses
+/rest/v1/network/upnp 
+/rest/v1/system/diagnostics/ping/job/1
+/rest/v1/system/diagnostics/ping/jobs?stateOnly=true
+/rest/v1/system/diagnostics/traceroute/jobs?stateOnly=true
+/rest/v1/system/firstinstall
+/rest/v1/system/gateway/provisioning
+/rest/v1/system/info
+/rest/v1/system/languages
+/rest/v1/system/localization
+/rest/v1/system/modemmode
+/rest/v1/system/reboot
+/rest/v1/system/restore
+/rest/v1/system/ui/defaults
+/rest/v1/system/ui/screens
+/rest/v1/user/3/language
+/rest/v1/user/3/password
+/rest/v1/user/login
+/rest/v1/wifi/band2g/config
+/rest/v1/wifi/band2g/guest/config
+/rest/v1/wifi/band2g/macfilters
+/rest/v1/wifi/band2g/state
+/rest/v1/wifi/band2g/wps/config
+/rest/v1/wifi/band2g/wps/pairing/jobs
+/rest/v1/wifi/band5g/config
+/rest/v1/wifi/band5g/guest/config
+/rest/v1/wifi/band5g/macfilters
+/rest/v1/wifi/band5g/state
+/rest/v1/wifi/band5g/wps/config
+/rest/v1/wifi/band5g/wps/pairing/jobs
+/rest/v1/wifi/capabilities
+/rest/v1/wifi/smartmode
+/resources/languages/uk.json
+Pages marked with an asterisk (*) are accessible without authentication.
 ```
